@@ -136,20 +136,103 @@ public class SingleList  {
         return q;
     }
     
-    void sort(){
+    void swap(int i){
         Node swap = new Node();
-        
-        for (int i = this.count(); i > 0; i--) {
-            for (int j = 0; j < (i-1); j++) {
-                if (node(j).info > node(j+1).info){
-                    swap = node(j);
-                    node(j).next = node(j+1).next;
-                    node(j+1).next = swap;
-                    if ( j > 0)
-                        node(j-1).next = node(j);
-                    head = node(0);
+        Node hold = new Node();
+        Node after = new Node();
+        if (node(i).info > node(i+1).info){
+            if ( i == 0){
+                after = node(i+1).next;
+                hold = head;
+                head = node(i+1);
+                node(i).next = hold;
+                node(i+1).next = after;
+            }
+            else {
+            hold = node(i-1).next;
+            swap = node(i+1);
+            after = node(i+1).next;
+            if (i > 0)
+                node(i-1).next = swap;
+            node(i).next = hold;
+            node(i+1).next = after;
+            
+            head = node(0);
+            }
+        }
+    }
+    
+    void sort(){
+        int i = 0;
+        int j = 0;
+        Node swap = new Node();
+        Node hold = new Node();
+        Node after = new Node();
+        try {
+        for (i = this.count(); i > 0; i--) {
+            for (j = 0; j < i-1; j++) {
+                  
+                    if (node(j).info > node(j+1).info){
+                        if ( j == 0){
+                            after = node(j+1).next;
+                            hold = head;
+                            head = node(j+1);
+                            node(j).next = hold;
+                            node(j+1).next = after;
+                        }
+                        else {
+                        hold = node(j-1).next;
+                        swap = node(j+1);
+                        after = node(j+1).next;
+                        if (j > 0)
+                            node(j-1).next = swap;
+                        node(j).next = hold;
+                        node(j+1).next = after;
+
+                        head = node(0);
+                        }
+                    }
                 }
             }
+        }
+        catch (Exception e){
+            System.out.println("i, j = " + i + "," + j);
+            }
         }  
+    
+    
+    int [] toArray(){
+        int [] a = new int[this.count()];
+        int index = 0;
+        Node p = head;
+        while (p != null){
+            a[index] = p.info;
+            index++;
+            p = p.next;
+        }
+        
+        
+        return a;
     }
-}
+    
+    SingleList merge(SingleList a, SingleList b){
+        SingleList c = new SingleList();
+        int index = a.count() + b.count();
+        int [] array = new int[index];
+        for (int i = 0; i < a.count(); i++) {
+            array[i] = a.toArray()[i];
+        }
+        for (int j = 0; j < b.count(); j++) {
+            array[j+a.count()] = b.toArray()[j];
+        }
+        for (int k = 0; k < index; k++) {
+            c.addToTail(array[k]);
+        }
+        return c;
+        
+        }
+    }
+   
+    
+    
+
