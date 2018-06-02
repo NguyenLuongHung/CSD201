@@ -38,4 +38,14 @@ public class Lended {
     int getState(){
         return this.state;
     }
+    
+ 
+    
+   
+    void display(){
+        
+        System.out.printf("%-15s%-2s%-30s%-2s%-15d\n",bcode,"|",rcode,"|",state);
+        System.out.println("--------------------------------------------------------");
+       
+    }
 }

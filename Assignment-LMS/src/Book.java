@@ -58,6 +58,7 @@ public class Book {
     void display(){
         double value = price * quantity;
         System.out.printf("%-15s%-2s%-30s%-2s%-15d%-2s%-15d%-2s%-15.1f%-2s%-15.1f\n",bcode,"|",title,"|",quantity,"|",lended,"|",price,"|",value);
+        System.out.println("------------------------------------------------------------------------------------------------------------------");
        
     }
     

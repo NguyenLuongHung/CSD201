@@ -11,9 +11,9 @@
 public class Reader {
     private String rcode;
     private String name;
-    private int byear;
+    private double byear;
     
-    public Reader(String rcode, String name, int byear){
+    public Reader(String rcode, String name, double byear){
         this.rcode = rcode;
         this.name = name;
         this.byear = byear;
@@ -34,7 +34,14 @@ public class Reader {
     String getName(){
         return this.name;
     }
-    int getByear(){
+    double getByear(){
         return this.byear;
+    }
+    
+    void display(){
+        
+        System.out.printf("%-15s%-2s%-30s%-2s%-15.0f\n",rcode,"|",name,"|",byear);
+        System.out.println("--------------------------------------------------------");
+       
     }
 }
