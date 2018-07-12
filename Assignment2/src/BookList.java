@@ -103,8 +103,10 @@ public class BookList {
     
      public void breadth() throws Exception{
         MyQueue a = new MyQueue();
+        MyQueue b = new MyQueue();
         a.enqueue(root);
-        NodeBook p;
+        
+        NodeBook p = null;
         System.out.printf("%-15s%-2s%-30s%-2s%-15s%-2s%-15s%-2s%-15s%-2s%-15s\n", "bcode", "|", "title", "|", "quantity", "|", "lended", "|", "price", "|", "value");
         while (!a.isEmpty()){
             p = a.dequeue();
@@ -122,14 +124,14 @@ public class BookList {
         }
 
     }
-     public MyStack inorder() throws Exception {
+     public void inorder() throws Exception {
         System.out.printf("%-15s%-2s%-30s%-2s%-15s%-2s%-15s%-2s%-15s%-2s%-15s\n", "bcode", "|", "title", "|", "quantity", "|", "lended", "|", "price", "|", "value");
         MyStack a = new MyStack();
-        MyStack b = new MyStack();
+       
         NodeBook q = root;
         while (q != null){
             a.push(q);
-            b.push(q);
+            
             q = q.left;
         }
         
@@ -140,14 +142,14 @@ public class BookList {
                 q = q.right;
                 while (q != null){
                     a.push(q);
-                    b.push(q);
+                    
                     q = q.left;
                 }
             }
         }
         
         
-       return b; 
+       
     }
      
      void inorder2(NodeBook p, ArrayList a)
@@ -301,6 +303,11 @@ public class BookList {
       while(rp.right!=null) 
        {f=rp; rp = rp.right;}// Find the right most node on the left sub-tree
       p.book.setBcode(rp.book.getBcode());
+      p.book.setLended(rp.book.getLended());
+      p.book.setPrice(rp.book.getPrice());
+      p.book.setQuantity(rp.book.getQuantity());
+      p.book.setTitle(rp.book.getTitle());
+      
       if(f==null) // rp is just a left son of p 
         p.left=rp.left;
         else
@@ -313,10 +320,10 @@ public class BookList {
 
    
 
-    public int count() throws Exception {
-        MyStack a = inorder();
-        return a.size();
-    }
+//    public int count() throws Exception {
+//        MyStack a = inorder();
+//        return a.size();
+//    }
 
    
 
@@ -433,6 +440,7 @@ public class BookList {
             q = q.left;
         }
             while (!a.isEmpty()){
+                q = a.pop();
                 bw.write(q.book.getBcode());
                 bw.write('|');
                 bw.write(q.book.getTitle());
@@ -443,7 +451,7 @@ public class BookList {
                 String price = ""+q.book.getPrice();
                 bw.write(price);
                 bw.newLine();
-                q = a.pop();
+                
             
                 if (q.right != null){
                     q = q.right;
