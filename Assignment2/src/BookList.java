@@ -101,7 +101,7 @@ public class BookList {
         }
     }
     
-     public void breadth() throws Exception{
+     public MyQueue breadth() throws Exception{
         MyQueue a = new MyQueue();
         MyQueue b = new MyQueue();
         a.enqueue(root);
@@ -112,16 +112,19 @@ public class BookList {
             p = a.dequeue();
             if (p.left != null){
                 a.enqueue(p.left);
+                b.enqueue(p.left);
 
             }
             if (p.right != null){
                 a.enqueue(p.right);
+                b.enqueue(p.right);
 
-                
+                    
             }
             p.book.display();
             
         }
+        return b;
 
     }
      public void inorder() throws Exception {
@@ -320,10 +323,10 @@ public class BookList {
 
    
 
-//    public int count() throws Exception {
-//        MyStack a = inorder();
-//        return a.size();
-//    }
+    public int count() throws Exception {
+        MyQueue a = breadth();
+        return a.size();
+    }
 
    
 

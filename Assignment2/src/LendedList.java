@@ -92,16 +92,12 @@ public class LendedList {
         NodeBook a = q.root;
         MyQueue d = new MyQueue();
         d.enqueue(a);
-        NodeBook l;
+        NodeBook l = null;
         while (!d.isEmpty()){
             int i = 0;
-            
-            if(a.book.getBcode().equals(bcode)){
-                accept1 = 1;
-                break;
-            }
-            accept1 = 0;
             l = d.dequeue();
+            
+            
             if (l.left != null){
                 d.enqueue(l.left);
 
@@ -109,6 +105,11 @@ public class LendedList {
             if (l.right != null){
                 d.enqueue(l.right);
             }
+            if(l.book.getBcode().equals(bcode)){
+                accept1 = 1;
+                break;
+            }
+            accept1 = 0;
             
             System.out.println("i = " + i);
         }
@@ -147,7 +148,7 @@ public class LendedList {
         }
         else if(accept1 == 1 && accept2 == 1 && a.book.getLended() < a.book.getQuantity()){
             a.book.setLended(a.book.getLended() + 1);
-            this.add(new Lended(a.book.getBcode(),b.reader.getRcode(),1));
+            this.add(new Lended(l.book.getBcode(),b.reader.getRcode(),1));
         }
         else if (accept1 == 1 && accept2 == 1 && a.book.getLended() == a.book.getQuantity()){
             this.add(new Lended(bcode, rcode,0));

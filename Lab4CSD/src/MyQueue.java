@@ -24,11 +24,16 @@ public class MyQueue {
     }
     
     public void enqueue(Node p){
-        if (isEmpty()) head = tail = p;
+        if (isEmpty()){
+            head = tail = p;
+            head.next = tail.next = null;
+        
+        }
         else {
             
             tail.next = p;
             tail = p;
+            tail.next = null;
         }
     }
     
@@ -63,6 +68,16 @@ public class MyQueue {
             System.out.println(q.info + " ");
             q = q.next;
         }
+    }
+    
+    public int size(){
+        Node  q = head;
+        int size = 0;
+        while (q != null){
+            size++;
+            q = q.next;
+        }
+        return size;
     }
     
 }

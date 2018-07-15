@@ -31,6 +31,15 @@ public class MyQueue {
             tail = p;
         }
     }
+    public int size(){
+        int size = 1;
+        NodeBook p = head;
+        while (p != null){
+            size += 1;
+            p = p.next;
+        }
+        return size;
+    }
     
     
     public NodeBook dequeue() throws Exception {

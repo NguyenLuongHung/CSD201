@@ -200,4 +200,185 @@ public class BSTree {
         
     }
     
+    int countHeight(Node p){
+        int dept = 0;
+        
+        MyStack a = new MyStack();
+        MyStack b = new MyStack();
+        
+        a.push(p);
+        while (!a.isEmpty()){
+            p = a.top();
+            if (!b.isEmpty() && p == b.top()){
+                if (b.size() > dept){
+                    dept = b.size();
+                }
+                a.pop();
+                b.pop();
+            }
+            else {
+                b.push(p);
+                if(p.right != null)
+                    a.push(p.right);
+                if(p.left != null)
+                    a.push(p.left);
+                
+            }
+        }
+        return dept;
+    }
+    
+    int balanceFactor(Node p){
+        int left = 0; int right = 0;
+        //Balance-factor(Node) = Height(left subtree) - Height (right subtree)
+        if(p.left!= null)
+            left = countHeight(p.left);
+        if(p.right!= null)
+            right = countHeight(p.right);
+        return left - right;
+    }
+    
+    int countNode(Node p) throws Exception{
+        int count = 0;
+        MyQueue a = new MyQueue();
+        MyQueue b = new MyQueue();
+        Node q;
+        a.enqueue(p);
+        b.enqueue(p);
+        while (!a.isEmpty()) {
+            q = a.dequeue();
+            if(q.left != null){
+                a.enqueue(q.left);
+                b.enqueue(q.left);
+            }
+            if(q.right != null){
+                a.enqueue(q.right);
+                b.enqueue(q.right);
+            }
+        }
+        return b.size();
+    }
+    
+    Node findMax(Node p){
+        while (p.right != null){
+            p = p.right;
+        }
+        return p;
+    }
+    
+    Node findMint(Node p){
+        while (p.left != null){
+            p = p.left;
+        }
+        return p;
+    }
+    
+    Node findParent(Node q){
+        Node p = root;
+        while (p != null){
+            
+            if (p.left == q){
+                return p;
+            }
+            else if (p.right == q){
+                return p;
+            }
+            
+            if (q.info < p.info)
+                p = p.left;
+            else
+                p = p.right;
+        }
+        return null;
+    }
+    
+    void deleteLeaft(Node q){
+        Node p = root;
+        while (p != null){
+            if (p.left == q){
+                p.left = null;
+                return;
+            }
+            else if (p.right == q){
+             p.right = null;
+                return;
+        }
+            if (q.info < p.info)
+                p = p.left;
+            else
+                p = p.right;
+        }
+    }
+    
+    void deleteOne(Node q){
+        Node p = root;
+        while (p != null){
+            if (p.left == q){
+                if (q.left != null)
+                    p.left = q.left;
+                else
+                    p.left = q.right;
+            }
+            else if (p.right == q){
+                if (q.right != null)
+                    p.right = q.right;
+                else
+                    p.right = q.left;
+            }
+               
+            if(q.info < p.info)
+                p = p.left;
+            else 
+                p = p.right;
+        }
+        
+    }    
+    
+    
+    void deleteByCopy(Node q){
+        
+        if (q.left == null && q.right == null){
+            deleteLeaft(q);
+        }
+        else if (q.left != null && q.right == null){
+            deleteOne(q);
+        }
+        
+        else if (q.left == null && q.right != null){
+            deleteOne(q);
+        }
+        else {
+            Node p = root;
+            while (p != null){
+                if (p.left == q){
+                    Node temp = findMax(q.left);
+                    
+                    if (temp.left == null && temp.right == null)
+                        deleteLeaft(temp);
+                    else
+                        deleteOne(temp);
+                    p.left = temp;
+                    temp.left = q.left;
+                    temp.right = q.right;
+                }
+                if (p.right == q){
+                    Node temp = findMint(q.right);
+                    
+                    if(temp.left == null && temp.right == null)
+                        deleteLeaft(temp);
+                    else
+                        deleteOne(temp);
+                    p.right = temp;
+                    temp.left = q.left;
+                    temp.right = q.right;
+                    
+                }
+
+                if (q.info < p.info)
+                    p = p.left;
+                else
+                    p = p.right;
+            }
+        }
+    }
 }
