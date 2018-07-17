@@ -1,3 +1,6 @@
+
+import java.util.ArrayList;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -341,14 +344,46 @@ public class BSTree {
             deleteLeaft(q);
         }
         else if (q.left != null && q.right == null){
-            deleteOne(q);
+            if(q == root)
+                root = root.left;
+            else
+                deleteOne(q);
         }
         
         else if (q.left == null && q.right != null){
-            deleteOne(q);
+            if (q == root)
+                root = root.right;
+            else
+                deleteOne(q);
         }
         else {
             Node p = root;
+            if (q == root){
+                if (balanceFactor(q) > 0){
+                Node temp = findMax(q.left);
+                    
+                    if (temp.left == null && temp.right == null)
+                        deleteLeaft(temp);
+                    else
+                        deleteOne(temp);
+                    root = temp;
+                    temp.left = q.left;
+                    temp.right = q.right;
+                }
+                else {
+                    Node temp = findMint(q.right);
+                    
+                    if(temp.left == null && temp.right == null)
+                        deleteLeaft(temp);
+                    else
+                        deleteOne(temp);
+                    root = temp;
+                    temp.left = q.left;
+                    temp.right = q.right;
+                }
+                    
+            }
+            else
             while (p != null){
                 if (p.left == q){
                     Node temp = findMax(q.left);
@@ -381,4 +416,35 @@ public class BSTree {
             }
         }
     }
+    
+    void rebuild(ArrayList<Node> sort,int first, int last){
+        if (first <= last){
+            int middle = (first + last)/2;
+            insert(sort.get(middle).info);
+            rebuild(sort,first,middle-1);
+            rebuild(sort,middle+1,last);
+        }      
+        
+    }
+    void rebuild(ArrayList<Node> sort){
+        rebuild(sort,0,sort.size()-1);
+    }
+    
+    ArrayList<Node> simpleBalance() throws Exception{
+        ArrayList<Node> sort = new ArrayList();
+        
+        int n = this.countNode(root);
+        
+        for (int j = 0; j < n; j++) {
+            Node q = findMint(root);
+            sort.add(q);    
+        
+            deleteByCopy(q);
+        
+            
+        }
+        clear();
+        return sort;
+    }
+    
 }
